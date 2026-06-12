@@ -1,4 +1,4 @@
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams, useNavigate } from 'react-router-dom'
 import { useMemo } from 'react'
 import { useRecipes, useCategories } from '../hooks/useRecipes'
 import { useDebounce } from '../hooks/useDebounce'
@@ -16,6 +16,7 @@ const difficulties: { value: Difficulty | ''; label: string }[] = [
 
 function HomePage() {
   const [searchParams, setSearchParams] = useSearchParams()
+  const navigate = useNavigate()
   const { data: recipes, isLoading } = useRecipes()
   const { data: categories } = useCategories()
 
@@ -66,7 +67,7 @@ function HomePage() {
         <select
           value={selectedCategory}
           onChange={(e) => setParam('category', e.target.value)}
-          className="px-3 py-1.5 text-sm border border-stone-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-lime-500"
+          className="px-3 py-1.5 text-sm border border-border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"
         >
           <option value="">Todas categorias</option>
           {categories?.map((c) => (
@@ -79,10 +80,10 @@ function HomePage() {
             <button
               key={d.value}
               onClick={() => setParam('difficulty', d.value)}
-              className={`px-3 py-1.5 text-sm rounded-lg border cursor-pointer ${
+              className={`px-3 py-1.5 text-sm rounded-lg border cursor-pointer transition-all ${
                 selectedDifficulty === d.value
-                  ? 'bg-lime-600 text-white border-lime-600'
-                  : 'bg-white text-stone-600 border-stone-300 hover:bg-stone-50'
+                  ? 'bg-primary text-white border-primary'
+                  : 'bg-white text-stone-600 border-border hover:border-primary/50 hover:text-primary'
               }`}
             >
               {d.label}
@@ -95,11 +96,19 @@ function HomePage() {
             {filtered.length} receita{filtered.length !== 1 ? 's' : ''} encontrada{filtered.length !== 1 ? 's' : ''}
           </span>
         )}
+
+        <button
+          onClick={() => navigate('/recipes/new')}
+          className="ml-auto px-4 py-1.5 bg-primary text-white rounded-lg text-sm font-medium hover:bg-primary-dark transition-colors cursor-pointer md:hidden"
+        >
+          Nova Receita
+        </button>
       </div>
 
       {filtered.length === 0 ? (
         <EmptyState
           message={searchQuery ? 'Nenhuma receita encontrada para esta busca' : 'Nenhuma receita cadastrada ainda'}
+          action={!searchQuery ? { label: 'Criar primeira receita', onClick: () => navigate('/recipes/new') } : undefined}
         />
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

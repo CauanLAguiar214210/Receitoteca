@@ -25,7 +25,7 @@ export default function CookingModePage() {
         <h1 className="font-semibold truncate">{recipe.title}</h1>
         <button
           onClick={() => navigate(-1)}
-          className="px-4 py-1.5 text-sm bg-stone-700 hover:bg-stone-600 rounded-lg cursor-pointer"
+          className="px-4 py-1.5 text-sm bg-stone-700 hover:bg-stone-600 rounded-lg transition-colors cursor-pointer"
         >
           Sair
         </button>
@@ -34,8 +34,8 @@ export default function CookingModePage() {
       <div className="flex-1 overflow-y-auto px-6 py-8 max-w-2xl mx-auto w-full">
         <ol className="space-y-6">
           {steps.map((step, i) => (
-            <li key={i} className="flex gap-4">
-              <span className="text-2xl font-bold text-lime-400 shrink-0 leading-tight">
+            <li key={i} className="flex gap-4 p-5 bg-stone-800 rounded-xl border border-stone-700">
+              <span className="text-2xl font-bold text-primary shrink-0 leading-tight">
                 {String(i + 1).padStart(2, '0')}
               </span>
               <p className="text-lg leading-relaxed text-stone-200">{step}</p>

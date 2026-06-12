@@ -65,7 +65,7 @@ export default function ImageUpload({ onUpload, currentImage }: ImageUploadProps
           type="button"
           onClick={() => inputRef.current?.click()}
           disabled={uploading}
-          className="w-full h-48 border-2 border-dashed border-stone-300 rounded-lg flex flex-col items-center justify-center text-stone-400 hover:border-lime-500 hover:text-lime-600 transition cursor-pointer"
+          className="w-full h-48 border-2 border-dashed border-border rounded-lg flex flex-col items-center justify-center text-stone-400 hover:border-primary hover:text-primary transition cursor-pointer"
         >
           <Upload size={28} />
           <span className="mt-2 text-sm">{uploading ? 'Enviando...' : 'Clique para enviar foto'}</span>

@@ -17,7 +17,11 @@ export default function Modal({ open, onClose, title, children }: ModalProps) {
       if (e.key === 'Escape') onClose()
     }
     document.addEventListener('keydown', handler)
-    return () => document.removeEventListener('keydown', handler)
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.removeEventListener('keydown', handler)
+      document.body.style.overflow = ''
+    }
   }, [open, onClose])
 
   if (!open) return null
@@ -25,13 +29,13 @@ export default function Modal({ open, onClose, title, children }: ModalProps) {
   return (
     <div
       ref={overlayRef}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 animate-fade-in"
       onClick={(e) => e.target === overlayRef.current && onClose()}
     >
-      <div className="bg-white rounded-xl shadow-xl w-full max-w-md mx-4">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-stone-200">
+      <div className="bg-white rounded-xl shadow-2xl w-full max-w-md mx-4 animate-slide-up">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-border">
           <h2 className="text-lg font-semibold text-stone-800">{title}</h2>
-          <button onClick={onClose} className="text-stone-400 hover:text-stone-600 cursor-pointer">
+          <button onClick={onClose} className="text-stone-400 hover:text-stone-600 transition-colors cursor-pointer">
             <X size={20} />
           </button>
         </div>

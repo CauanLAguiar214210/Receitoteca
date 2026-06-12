@@ -165,7 +165,7 @@ export default function RecipeFormPage() {
             <button
               type="button"
               onClick={() => appendIng({ name: '', amount: 0, unit: '' })}
-              className="flex items-center gap-1 text-sm text-lime-600 hover:text-lime-700 cursor-pointer"
+              className="flex items-center gap-1 text-sm text-primary hover:text-primary-dark cursor-pointer"
             >
               <Plus size={16} /> Adicionar
             </button>
@@ -217,7 +217,7 @@ export default function RecipeFormPage() {
               type="button"
               variant="ghost"
               onClick={() => appendInst('')}
-              className="text-lime-600 text-sm"
+              className="text-primary text-sm"
             >
               <Plus size={16} /> Adicionar passo
             </Button>
@@ -228,7 +228,7 @@ export default function RecipeFormPage() {
           <div className="space-y-3">
             {instFields.map((field, i) => (
               <div key={field.id} className="flex gap-2 items-start">
-                <span className="text-sm font-bold text-lime-600 mt-2.5 shrink-0">{i + 1}.</span>
+                <span className="text-sm font-bold text-primary mt-2.5 shrink-0">{i + 1}.</span>
                 <Textarea
                   label=""
                   rows={2}

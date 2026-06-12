@@ -25,9 +25,9 @@ export default function ShareButton({ url, title = 'Receita' }: ShareButtonProps
   return (
     <button
       onClick={handleShare}
-      className="flex items-center gap-1.5 text-sm text-stone-500 hover:text-lime-600 cursor-pointer"
+      className="flex items-center gap-1.5 text-sm text-stone-500 hover:text-primary transition-colors cursor-pointer"
     >
-      {copied ? <Check size={18} className="text-lime-600" /> : <Share2 size={18} />}
+      {copied ? <Check size={18} className="text-primary" /> : <Share2 size={18} />}
       {copied ? 'Link copiado!' : 'Compartilhar'}
     </button>
   )

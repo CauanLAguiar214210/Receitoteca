@@ -10,12 +10,12 @@ export default function Textarea({ label, error, className = '', ...props }: Tex
     <div>
       <label className="block text-sm font-medium text-stone-700 mb-1">{label}</label>
       <textarea
-        className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-500 resize-y ${
-          error ? 'border-red-400' : 'border-stone-300'
+        className={`w-full px-3 py-2 border border-border rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary resize-y ${
+          error ? 'border-danger' : 'border-border'
         } ${className}`}
         {...props}
       />
-      {error && <p className="text-sm text-red-600 mt-1">{error}</p>}
+      {error && <p className="text-sm text-danger mt-1">{error}</p>}
     </div>
   )
 }

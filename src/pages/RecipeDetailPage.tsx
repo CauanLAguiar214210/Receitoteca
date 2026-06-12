@@ -16,6 +16,12 @@ const difficultyLabel: Record<string, string> = {
   hard: 'Difícil',
 }
 
+const difficultyColor: Record<string, string> = {
+  easy: 'bg-emerald-100 text-emerald-700',
+  medium: 'bg-accent/20 text-accent-dark',
+  hard: 'bg-danger/10 text-danger',
+}
+
 export default function RecipeDetailPage() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
@@ -55,53 +61,69 @@ export default function RecipeDetailPage() {
     <div className="max-w-2xl mx-auto">
       <button
         onClick={() => navigate('/')}
-        className="flex items-center gap-1 text-sm text-stone-500 hover:text-stone-700 mb-4 cursor-pointer"
+        className="flex items-center gap-1 text-sm text-stone-500 hover:text-stone-700 mb-4 transition-colors cursor-pointer"
       >
         <ArrowLeft size={16} /> Voltar
       </button>
 
-      {recipe.image_url && (
-        <div className="w-full h-64 rounded-xl overflow-hidden mb-6 bg-stone-100">
+      {recipe.image_url ? (
+        <div className="w-full h-64 md:h-80 rounded-2xl overflow-hidden mb-6 bg-primary-light relative">
           <img src={recipe.image_url} alt={recipe.title} className="size-full object-cover" />
+        </div>
+      ) : (
+        <div className="w-full h-48 md:h-64 rounded-2xl overflow-hidden mb-6 bg-gradient-to-br from-primary-light via-amber-50 to-orange-100 flex items-center justify-center">
+          <ChefHat size={64} className="text-primary/30" />
         </div>
       )}
 
       <div className="flex items-start justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-stone-800">{recipe.title}</h1>
+        <div className="flex-1">
+          <div className="flex items-center gap-2 flex-wrap mb-1">
+            {recipe.difficulty && (
+              <span className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${difficultyColor[recipe.difficulty]}`}>
+                {difficultyLabel[recipe.difficulty]}
+              </span>
+            )}
+            {recipe.cook_time && (
+              <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-light text-primary">
+                {recipe.cook_time}min
+              </span>
+            )}
+          </div>
+          <h1 className="text-2xl md:text-3xl font-bold text-stone-800">{recipe.title}</h1>
           {recipe.description && (
-            <p className="text-stone-500 mt-1">{recipe.description}</p>
+            <p className="text-stone-500 mt-1.5">{recipe.description}</p>
           )}
         </div>
 
-        <div className="flex gap-2">
+        <div className="flex gap-1 shrink-0">
           <button
             onClick={() => toggleFav()}
-            className={`p-2 rounded-full cursor-pointer ${
-              isFavorited ? 'text-red-500' : 'text-stone-400 hover:text-red-500'
+            className={`p-2 rounded-full transition-colors cursor-pointer ${
+              isFavorited ? 'text-danger' : 'text-stone-400 hover:text-danger'
             }`}
           >
             <Heart size={22} fill={isFavorited ? 'currentColor' : 'none'} />
           </button>
           <button
             onClick={() => navigate(`/recipes/${id}/edit`)}
-            className="p-2 rounded-full text-stone-400 hover:text-lime-600 cursor-pointer"
+            className="p-2 rounded-full text-stone-400 hover:text-primary transition-colors cursor-pointer"
           >
             <Pencil size={20} />
           </button>
           <button
             onClick={() => setShowDeleteModal(true)}
-            className="p-2 rounded-full text-stone-400 hover:text-red-600 cursor-pointer"
+            className="p-2 rounded-full text-stone-400 hover:text-danger transition-colors cursor-pointer"
           >
             <Trash2 size={20} />
           </button>
         </div>
       </div>
 
-      <div className="flex flex-wrap items-center gap-3 mt-4">
+      <div className="flex flex-wrap items-center gap-3 mt-6">
         <Link
           to={`/recipes/${id}/cook`}
-          className="flex items-center gap-1.5 px-4 py-2 bg-lime-600 text-white rounded-lg hover:bg-lime-700 text-sm font-medium"
+          className="flex items-center gap-1.5 px-5 py-2.5 bg-primary text-white rounded-xl hover:bg-primary-dark transition-colors text-sm font-medium shadow-lg shadow-primary/25"
         >
           <CookingPot size={18} />
           Modo Preparo
@@ -116,47 +138,57 @@ export default function RecipeDetailPage() {
             useShoppingStore.getState().addItems(ings, recipe.title)
             addToast('Ingredientes adicionados à lista de compras')
           }}
-          className="flex items-center gap-1.5 text-sm text-stone-500 hover:text-lime-600 cursor-pointer"
+          className="flex items-center gap-1.5 px-4 py-2.5 text-sm text-stone-600 border border-border rounded-xl hover:border-primary/50 hover:text-primary transition-colors cursor-pointer"
         >
           <ShoppingCart size={18} />
           Lista de Compras
         </button>
       </div>
 
-      <div className="flex flex-wrap gap-4 mt-4 text-sm text-stone-600">
+      <div className="flex flex-wrap gap-4 mt-6 text-sm text-stone-600">
         {recipe.prep_time && (
-          <span className="flex items-center gap-1.5"><Clock size={16} /> Preparo: {recipe.prep_time}min</span>
+          <span className="flex items-center gap-1.5 px-3 py-1.5 bg-stone-100 rounded-lg"><Clock size={16} /> Preparo: {recipe.prep_time}min</span>
         )}
         {recipe.cook_time && (
-          <span className="flex items-center gap-1.5"><Clock size={16} /> Cozimento: {recipe.cook_time}min</span>
+          <span className="flex items-center gap-1.5 px-3 py-1.5 bg-stone-100 rounded-lg"><Clock size={16} /> Cozimento: {recipe.cook_time}min</span>
         )}
         {recipe.servings && (
-          <span className="flex items-center gap-1.5"><Users size={16} /> {recipe.servings} porções</span>
+          <span className="flex items-center gap-1.5 px-3 py-1.5 bg-stone-100 rounded-lg"><Users size={16} /> {recipe.servings} porções</span>
         )}
         {recipe.difficulty && (
-          <span className="flex items-center gap-1.5"><ChefHat size={16} /> {difficultyLabel[recipe.difficulty]}</span>
+          <span className="flex items-center gap-1.5 px-3 py-1.5 bg-stone-100 rounded-lg"><ChefHat size={16} /> {difficultyLabel[recipe.difficulty]}</span>
         )}
       </div>
 
-      <section className="mt-8">
-        <h2 className="text-lg font-semibold text-stone-800 mb-3">Ingredientes</h2>
-        <ul className="space-y-2">
-          {(recipe.ingredients as { name: string; amount: number; unit: string }[]).map((ing, i) => (
-            <li key={i} className="flex items-center gap-2 text-stone-700">
-              <span className="size-1.5 rounded-full bg-lime-500" />
-              {ing.amount} {ing.unit} de {ing.name}
-            </li>
-          ))}
-        </ul>
+      <section className="mt-10">
+        <h2 className="text-lg font-semibold text-stone-800 mb-4 flex items-center gap-2">
+          <span className="size-1.5 rounded-full bg-primary" />
+          Ingredientes
+        </h2>
+        <div className="bg-stone-50 rounded-xl p-5 border border-border">
+          <ul className="space-y-2.5">
+            {(recipe.ingredients as { name: string; amount: number; unit: string }[]).map((ing, i) => (
+              <li key={i} className="flex items-center gap-3 text-stone-700">
+                <span className="size-2 rounded-full bg-primary/40 shrink-0" />
+                <span><strong className="font-medium">{ing.amount}</strong> {ing.unit} de {ing.name}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       </section>
 
-      <section className="mt-8">
-        <h2 className="text-lg font-semibold text-stone-800 mb-3">Modo de Preparo</h2>
-        <ol className="space-y-3">
+      <section className="mt-10">
+        <h2 className="text-lg font-semibold text-stone-800 mb-4 flex items-center gap-2">
+          <span className="size-1.5 rounded-full bg-primary" />
+          Modo de Preparo
+        </h2>
+        <ol className="space-y-4">
           {(recipe.instructions as string[]).map((step, i) => (
-            <li key={i} className="flex gap-3 text-stone-700">
-              <span className="font-bold text-lime-600 shrink-0">{i + 1}.</span>
-              <span>{step}</span>
+            <li key={i} className="flex gap-4 p-4 bg-white rounded-xl border border-border">
+              <span className="size-7 rounded-full bg-primary text-white text-sm font-bold flex items-center justify-center shrink-0 mt-0.5">
+                {i + 1}
+              </span>
+              <span className="text-stone-700 leading-relaxed">{step}</span>
             </li>
           ))}
         </ol>

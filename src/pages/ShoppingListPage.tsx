@@ -42,7 +42,7 @@ export default function ShoppingListPage() {
               onClick={() => toggleItem(i)}
             >
               {item.checked ? (
-                <CheckCircle size={20} className="text-lime-600 shrink-0" />
+                <CheckCircle size={20} className="text-primary shrink-0" />
               ) : (
                 <Circle size={20} className="text-stone-300 shrink-0" />
               )}
