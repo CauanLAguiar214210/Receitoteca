@@ -9,12 +9,7 @@ import ShareButton from '../components/ui/ShareButton'
 import { useState } from 'react'
 import { useToastStore } from '../stores/useToastStore'
 import { useShoppingStore } from '../stores/useShoppingStore'
-
-const difficultyLabel: Record<string, string> = {
-  easy: 'Fácil',
-  medium: 'Médio',
-  hard: 'Difícil',
-}
+import { useTranslation } from 'react-i18next'
 
 const difficultyColor: Record<string, string> = {
   easy: 'bg-emerald-100 text-emerald-700',
@@ -23,6 +18,7 @@ const difficultyColor: Record<string, string> = {
 }
 
 export default function RecipeDetailPage() {
+  const { t } = useTranslation()
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const { data: recipe, isLoading } = useRecipe(id!)
@@ -39,9 +35,9 @@ export default function RecipeDetailPage() {
   if (!recipe) {
     return (
       <div className="text-center py-16">
-        <p className="text-stone-500">Receita não encontrada</p>
+        <p className="text-stone-500">{t('recipe.detail.notFound')}</p>
         <Button variant="ghost" onClick={() => navigate('/')} className="mt-4">
-          Voltar
+          {t('recipe.detail.back')}
         </Button>
       </div>
     )
@@ -50,10 +46,10 @@ export default function RecipeDetailPage() {
   const handleDelete = () => {
     deleteRecipe(id!, {
       onSuccess: () => {
-        addToast('Receita excluída com sucesso')
+        addToast(t('recipe.detail.deleteSuccess'))
         navigate('/')
       },
-      onError: () => addToast('Erro ao excluir receita', 'error'),
+      onError: () => addToast(t('recipe.detail.deleteError'), 'error'),
     })
   }
 
@@ -81,7 +77,7 @@ export default function RecipeDetailPage() {
           <div className="flex items-center gap-2 flex-wrap mb-1">
             {recipe.difficulty && (
               <span className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${difficultyColor[recipe.difficulty]}`}>
-                {difficultyLabel[recipe.difficulty]}
+                {t(`home.${recipe.difficulty}`)}
               </span>
             )}
             {recipe.cook_time && (
@@ -126,7 +122,7 @@ export default function RecipeDetailPage() {
           className="flex items-center gap-1.5 px-5 py-2.5 bg-primary text-white rounded-xl hover:bg-primary-dark transition-colors text-sm font-medium shadow-lg shadow-primary/25"
         >
           <CookingPot size={18} />
-          Modo Preparo
+          {t('recipe.detail.cookMode')}
         </Link>
 
         <ShareButton title={recipe.title} />
@@ -136,34 +132,34 @@ export default function RecipeDetailPage() {
             const ings = (recipe.ingredients as { name: string; amount: number; unit: string }[])
               .map((i) => `${i.amount} ${i.unit} de ${i.name}`)
             useShoppingStore.getState().addItems(ings, recipe.title)
-            addToast('Ingredientes adicionados à lista de compras')
+            addToast(t('recipe.detail.addedToList'))
           }}
           className="flex items-center gap-1.5 px-4 py-2.5 text-sm text-stone-600 border border-border rounded-xl hover:border-primary/50 hover:text-primary transition-colors cursor-pointer"
         >
           <ShoppingCart size={18} />
-          Lista de Compras
+          {t('recipe.detail.shoppingList')}
         </button>
       </div>
 
       <div className="flex flex-wrap gap-4 mt-6 text-sm text-stone-600">
         {recipe.prep_time && (
-          <span className="flex items-center gap-1.5 px-3 py-1.5 bg-stone-100 rounded-lg"><Clock size={16} /> Preparo: {recipe.prep_time}min</span>
+          <span className="flex items-center gap-1.5 px-3 py-1.5 bg-stone-100 rounded-lg"><Clock size={16} /> {t('recipe.detail.prepTime', { time: recipe.prep_time })}</span>
         )}
         {recipe.cook_time && (
-          <span className="flex items-center gap-1.5 px-3 py-1.5 bg-stone-100 rounded-lg"><Clock size={16} /> Cozimento: {recipe.cook_time}min</span>
+          <span className="flex items-center gap-1.5 px-3 py-1.5 bg-stone-100 rounded-lg"><Clock size={16} /> {t('recipe.detail.cookTime', { time: recipe.cook_time })}</span>
         )}
         {recipe.servings && (
-          <span className="flex items-center gap-1.5 px-3 py-1.5 bg-stone-100 rounded-lg"><Users size={16} /> {recipe.servings} porções</span>
+          <span className="flex items-center gap-1.5 px-3 py-1.5 bg-stone-100 rounded-lg"><Users size={16} /> {t('recipe.detail.servings', { count: recipe.servings })}</span>
         )}
         {recipe.difficulty && (
-          <span className="flex items-center gap-1.5 px-3 py-1.5 bg-stone-100 rounded-lg"><ChefHat size={16} /> {difficultyLabel[recipe.difficulty]}</span>
+          <span className="flex items-center gap-1.5 px-3 py-1.5 bg-stone-100 rounded-lg"><ChefHat size={16} /> {t(`home.${recipe.difficulty}`)}</span>
         )}
       </div>
 
       <section className="mt-10">
         <h2 className="text-lg font-semibold text-stone-800 mb-4 flex items-center gap-2">
           <span className="size-1.5 rounded-full bg-primary" />
-          Ingredientes
+          {t('recipe.detail.ingredients')}
         </h2>
         <div className="bg-stone-50 rounded-xl p-5 border border-border">
           <ul className="space-y-2.5">
@@ -180,7 +176,7 @@ export default function RecipeDetailPage() {
       <section className="mt-10">
         <h2 className="text-lg font-semibold text-stone-800 mb-4 flex items-center gap-2">
           <span className="size-1.5 rounded-full bg-primary" />
-          Modo de Preparo
+          {t('recipe.detail.instructions')}
         </h2>
         <ol className="space-y-4">
           {(recipe.instructions as string[]).map((step, i) => (
@@ -197,12 +193,12 @@ export default function RecipeDetailPage() {
       <Modal
         open={showDeleteModal}
         onClose={() => setShowDeleteModal(false)}
-        title="Excluir Receita"
+        title={t('recipe.detail.deleteTitle')}
       >
-        <p className="text-stone-600 mb-4">Tem certeza que deseja excluir esta receita? Esta ação não pode ser desfeita.</p>
+        <p className="text-stone-600 mb-4">{t('recipe.detail.deleteConfirm')}</p>
         <div className="flex justify-end gap-3">
-          <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>Cancelar</Button>
-          <Button variant="danger" onClick={handleDelete}>Excluir</Button>
+          <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>{t('common.cancel')}</Button>
+          <Button variant="danger" onClick={handleDelete}>{t('common.delete')}</Button>
         </div>
       </Modal>
     </div>

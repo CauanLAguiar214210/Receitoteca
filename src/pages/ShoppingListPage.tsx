@@ -4,8 +4,10 @@ import Button from '../components/ui/Button'
 import EmptyState from '../components/ui/EmptyState'
 import Modal from '../components/ui/Modal'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 export default function ShoppingListPage() {
+  const { t } = useTranslation()
   const { items, toggleItem, removeItem, clearAll } = useShoppingStore()
   const [showClearModal, setShowClearModal] = useState(false)
 
@@ -15,22 +17,22 @@ export default function ShoppingListPage() {
     <div className="max-w-2xl mx-auto">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-stone-800">Lista de Compras</h1>
+          <h1 className="text-2xl font-bold text-stone-800">{t('shopping.title')}</h1>
           <p className="text-sm text-stone-500">
-            {items.length} item{items.length !== 1 ? 'ns' : ''}
-            {unchecked > 0 && ` (${unchecked} pendente${unchecked !== 1 ? 's' : ''})`}
+            {t('shopping.items', { count: items.length })}
+            {unchecked > 0 && t('shopping.pending', { count: unchecked })}
           </p>
         </div>
 
         {items.length > 0 && (
           <Button variant="danger" onClick={() => setShowClearModal(true)}>
-            Limpar Lista
+            {t('shopping.clearList')}
           </Button>
         )}
       </div>
 
       {items.length === 0 ? (
-        <EmptyState message="Nenhum item na lista. Adicione ingredientes de uma receita!" />
+        <EmptyState message={t('shopping.empty')} />
       ) : (
         <div className="space-y-1">
           {items.map((item, i) => (
@@ -71,11 +73,11 @@ export default function ShoppingListPage() {
       <Modal
         open={showClearModal}
         onClose={() => setShowClearModal(false)}
-        title="Limpar Lista"
+        title={t('shopping.clearList')}
       >
-        <p className="text-stone-600 mb-4">Tem certeza que deseja limpar todos os itens da lista?</p>
+        <p className="text-stone-600 mb-4">{t('shopping.clearConfirm')}</p>
         <div className="flex justify-end gap-3">
-          <Button variant="secondary" onClick={() => setShowClearModal(false)}>Cancelar</Button>
+          <Button variant="secondary" onClick={() => setShowClearModal(false)}>{t('shopping.cancel')}</Button>
           <Button
             variant="danger"
             onClick={() => {
@@ -83,7 +85,7 @@ export default function ShoppingListPage() {
               setShowClearModal(false)
             }}
           >
-            Limpar
+            {t('shopping.clear')}
           </Button>
         </div>
       </Modal>

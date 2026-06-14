@@ -1,0 +1,155 @@
+{
+  "common": {
+    "loading": "Carregando...",
+    "back": "Voltar",
+    "cancel": "Cancelar",
+    "delete": "Excluir",
+    "save": "Salvar",
+    "saving": "Salvando...",
+    "search": "Buscar",
+    "select": "Selecione",
+    "recipes": "Receitas"
+  },
+  "nav": {
+    "home": "Início",
+    "favorites": "Favoritos",
+    "shopping": "Compras",
+    "newRecipe": "Nova Receita",
+    "signOut": "Sair",
+    "searchPlaceholder": "Buscar receitas..."
+  },
+  "auth": {
+    "login": {
+      "title": "Entrar",
+      "subtitle": "Acesse suas receitas",
+      "emailLabel": "Email",
+      "passwordLabel": "Senha",
+      "button": "Entrar",
+      "buttonLoading": "Entrando...",
+      "noAccount": "Não tem conta?",
+      "signUpLink": "Cadastre-se",
+      "fallbackError": "Erro ao fazer login"
+    },
+    "register": {
+      "title": "Criar Conta",
+      "subtitle": "Cadastre-se para criar receitas",
+      "emailLabel": "Email",
+      "passwordLabel": "Senha",
+      "confirmLabel": "Confirmar Senha",
+      "button": "Cadastrar",
+      "buttonLoading": "Cadastrando...",
+      "hasAccount": "Já tem conta?",
+      "signInLink": "Entrar",
+      "fallbackError": "Erro ao cadastrar",
+      "passwordsDontMatch": "Senhas não conferem"
+    }
+  },
+  "home": {
+    "allCategories": "Todas categorias",
+    "allDifficulties": "Todas",
+    "easy": "Fácil",
+    "medium": "Médio",
+    "hard": "Difícil",
+    "newRecipe": "Nova Receita",
+    "recipesFound_one": "{{count}} receita encontrada",
+    "recipesFound_other": "{{count}} receitas encontradas",
+    "noResults": "Nenhuma receita encontrada para esta busca",
+    "noRecipes": "Nenhuma receita cadastrada ainda",
+    "createFirst": "Criar primeira receita"
+  },
+  "recipe": {
+    "form": {
+      "editTitle": "Editar Receita",
+      "newTitle": "Nova Receita",
+      "titleLabel": "Título",
+      "descriptionLabel": "Descrição",
+      "prepTimeLabel": "Tempo de preparo (min)",
+      "cookTimeLabel": "Tempo de cozimento (min)",
+      "servingsLabel": "Porções",
+      "difficultyLabel": "Dificuldade",
+      "categoryLabel": "Categoria",
+      "selectPlaceholder": "Selecione",
+      "ingredientsSection": "Ingredientes",
+      "addIngredient": "Adicionar",
+      "namePlaceholder": "Nome",
+      "qtyPlaceholder": "Qtd",
+      "unitPlaceholder": "Un",
+      "instructionsSection": "Modo de Preparo",
+      "addStep": "Adicionar passo",
+      "stepPlaceholder": "Passo {{number}}",
+      "updatedSuccess": "Receita atualizada com sucesso",
+      "updateError": "Erro ao atualizar receita",
+      "createdSuccess": "Receita criada com sucesso",
+      "createError": "Erro ao criar receita",
+      "submitUpdate": "Atualizar",
+      "submitCreate": "Criar Receita",
+      "cancel": "Cancelar",
+      "back": "Voltar"
+    },
+    "detail": {
+      "notFound": "Receita não encontrada",
+      "back": "Voltar",
+      "prepTime": "Preparo: {{time}}min",
+      "cookTime": "Cozimento: {{time}}min",
+      "servings_one": "{{count}} porção",
+      "servings_other": "{{count}} porções",
+      "ingredients": "Ingredientes",
+      "instructions": "Modo de Preparo",
+      "cookMode": "Modo Preparo",
+      "shoppingList": "Lista de Compras",
+      "addedToList": "Ingredientes adicionados à lista de compras",
+      "deleteConfirm": "Tem certeza que deseja excluir esta receita? Esta ação não pode ser desfeita.",
+      "deleteTitle": "Excluir Receita",
+      "deleteSuccess": "Receita excluída com sucesso",
+      "deleteError": "Erro ao excluir receita"
+    }
+  },
+  "favorites": {
+    "title": "Receitas Favoritas",
+    "empty": "Nenhuma receita favoritada ainda"
+  },
+  "shopping": {
+    "title": "Lista de Compras",
+    "items_one": "{{count}} item",
+    "items_other": "{{count}} itens",
+    "pending_one": "({{count}} pendente)",
+    "pending_other": "({{count}} pendentes)",
+    "clearList": "Limpar Lista",
+    "clearConfirm": "Tem certeza que deseja limpar todos os itens da lista?",
+    "clear": "Limpar",
+    "empty": "Nenhum item na lista. Adicione ingredientes de uma receita!",
+    "cancel": "Cancelar"
+  },
+  "cooking": {
+    "notFound": "Receita não encontrada",
+    "exit": "Sair",
+    "steps_one": "{{count}} passo",
+    "steps_other": "{{count}} passos"
+  },
+  "share": {
+    "button": "Compartilhar",
+    "title": "Receita",
+    "copied": "Link copiado!"
+  },
+  "upload": {
+    "label": "Foto da Receita",
+    "uploading": "Enviando...",
+    "clickToUpload": "Clique para enviar foto"
+  },
+  "validation": {
+    "ingredientRequired": "Ingrediente é obrigatório",
+    "amountPositive": "Quantidade deve ser positiva",
+    "unitRequired": "Unidade é obrigatória",
+    "titleMin": "Título deve ter no mínimo 3 caracteres",
+    "minIngredient": "Adicione pelo menos 1 ingrediente",
+    "minInstruction": "Adicione pelo menos 1 instrução",
+    "timePositive": "Tempo deve ser positivo",
+    "servingsPositive": "Porções deve ser positiva",
+    "invalidEmail": "Email inválido",
+    "passwordMin": "Senha deve ter no mínimo 6 caracteres",
+    "passwordsDontMatch": "Senhas não conferem"
+  },
+  "errors": {
+    "notAuthenticated": "Usuário não autenticado"
+  }
+}

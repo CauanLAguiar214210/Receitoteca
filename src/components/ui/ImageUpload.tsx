@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react'
 import { Upload, X } from 'lucide-react'
 import { supabase } from '../../lib/supabaseClient'
+import { useTranslation } from 'react-i18next'
 
 interface ImageUploadProps {
   onUpload: (url: string) => void
@@ -8,6 +9,7 @@ interface ImageUploadProps {
 }
 
 export default function ImageUpload({ onUpload, currentImage }: ImageUploadProps) {
+  const { t } = useTranslation()
   const [preview, setPreview] = useState<string | null>(currentImage ?? null)
   const [uploading, setUploading] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -47,7 +49,7 @@ export default function ImageUpload({ onUpload, currentImage }: ImageUploadProps
 
   return (
     <div>
-      <label className="block text-sm font-medium text-stone-700 mb-1">Foto da Receita</label>
+      <label className="block text-sm font-medium text-stone-700 mb-1">{t('upload.label')}</label>
 
       {preview ? (
         <div className="relative w-full h-48 rounded-lg overflow-hidden bg-stone-100">
@@ -68,7 +70,7 @@ export default function ImageUpload({ onUpload, currentImage }: ImageUploadProps
           className="w-full h-48 border-2 border-dashed border-border rounded-lg flex flex-col items-center justify-center text-stone-400 hover:border-primary hover:text-primary transition cursor-pointer"
         >
           <Upload size={28} />
-          <span className="mt-2 text-sm">{uploading ? 'Enviando...' : 'Clique para enviar foto'}</span>
+          <span className="mt-2 text-sm">{uploading ? t('upload.uploading') : t('upload.clickToUpload')}</span>
         </button>
       )}
 

@@ -1,0 +1,155 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "back": "Back",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "save": "Save",
+    "saving": "Saving...",
+    "search": "Search",
+    "select": "Select",
+    "recipes": "Recipes"
+  },
+  "nav": {
+    "home": "Home",
+    "favorites": "Favorites",
+    "shopping": "Shopping",
+    "newRecipe": "New Recipe",
+    "signOut": "Sign Out",
+    "searchPlaceholder": "Search recipes..."
+  },
+  "auth": {
+    "login": {
+      "title": "Sign In",
+      "subtitle": "Access your recipes",
+      "emailLabel": "Email",
+      "passwordLabel": "Password",
+      "button": "Sign In",
+      "buttonLoading": "Signing in...",
+      "noAccount": "Don't have an account?",
+      "signUpLink": "Sign Up",
+      "fallbackError": "Error signing in"
+    },
+    "register": {
+      "title": "Create Account",
+      "subtitle": "Sign up to create recipes",
+      "emailLabel": "Email",
+      "passwordLabel": "Password",
+      "confirmLabel": "Confirm Password",
+      "button": "Sign Up",
+      "buttonLoading": "Signing up...",
+      "hasAccount": "Already have an account?",
+      "signInLink": "Sign In",
+      "fallbackError": "Error signing up",
+      "passwordsDontMatch": "Passwords do not match"
+    }
+  },
+  "home": {
+    "allCategories": "All categories",
+    "allDifficulties": "All",
+    "easy": "Easy",
+    "medium": "Medium",
+    "hard": "Hard",
+    "newRecipe": "New Recipe",
+    "recipesFound_one": "{{count}} recipe found",
+    "recipesFound_other": "{{count}} recipes found",
+    "noResults": "No recipes found for this search",
+    "noRecipes": "No recipes registered yet",
+    "createFirst": "Create first recipe"
+  },
+  "recipe": {
+    "form": {
+      "editTitle": "Edit Recipe",
+      "newTitle": "New Recipe",
+      "titleLabel": "Title",
+      "descriptionLabel": "Description",
+      "prepTimeLabel": "Prep time (min)",
+      "cookTimeLabel": "Cook time (min)",
+      "servingsLabel": "Servings",
+      "difficultyLabel": "Difficulty",
+      "categoryLabel": "Category",
+      "selectPlaceholder": "Select",
+      "ingredientsSection": "Ingredients",
+      "addIngredient": "Add",
+      "namePlaceholder": "Name",
+      "qtyPlaceholder": "Qty",
+      "unitPlaceholder": "Unit",
+      "instructionsSection": "Instructions",
+      "addStep": "Add step",
+      "stepPlaceholder": "Step {{number}}",
+      "updatedSuccess": "Recipe updated successfully",
+      "updateError": "Error updating recipe",
+      "createdSuccess": "Recipe created successfully",
+      "createError": "Error creating recipe",
+      "submitUpdate": "Update",
+      "submitCreate": "Create Recipe",
+      "cancel": "Cancel",
+      "back": "Back"
+    },
+    "detail": {
+      "notFound": "Recipe not found",
+      "back": "Back",
+      "prepTime": "Prep: {{time}}min",
+      "cookTime": "Cook: {{time}}min",
+      "servings_one": "{{count}} serving",
+      "servings_other": "{{count}} servings",
+      "ingredients": "Ingredients",
+      "instructions": "Instructions",
+      "cookMode": "Cook Mode",
+      "shoppingList": "Shopping List",
+      "addedToList": "Ingredients added to shopping list",
+      "deleteConfirm": "Are you sure you want to delete this recipe? This action cannot be undone.",
+      "deleteTitle": "Delete Recipe",
+      "deleteSuccess": "Recipe deleted successfully",
+      "deleteError": "Error deleting recipe"
+    }
+  },
+  "favorites": {
+    "title": "Favorite Recipes",
+    "empty": "No favorited recipes yet"
+  },
+  "shopping": {
+    "title": "Shopping List",
+    "items_one": "{{count}} item",
+    "items_other": "{{count}} items",
+    "pending_one": "({{count}} pending)",
+    "pending_other": "({{count}} pending)",
+    "clearList": "Clear List",
+    "clearConfirm": "Are you sure you want to clear all items from the list?",
+    "clear": "Clear",
+    "empty": "No items in the list. Add ingredients from a recipe!",
+    "cancel": "Cancel"
+  },
+  "cooking": {
+    "notFound": "Recipe not found",
+    "exit": "Exit",
+    "steps_one": "{{count}} step",
+    "steps_other": "{{count}} steps"
+  },
+  "share": {
+    "button": "Share",
+    "title": "Recipe",
+    "copied": "Link copied!"
+  },
+  "upload": {
+    "label": "Recipe Photo",
+    "uploading": "Uploading...",
+    "clickToUpload": "Click to upload photo"
+  },
+  "validation": {
+    "ingredientRequired": "Ingredient is required",
+    "amountPositive": "Amount must be positive",
+    "unitRequired": "Unit is required",
+    "titleMin": "Title must have at least 3 characters",
+    "minIngredient": "Add at least 1 ingredient",
+    "minInstruction": "Add at least 1 instruction",
+    "timePositive": "Time must be positive",
+    "servingsPositive": "Servings must be positive",
+    "invalidEmail": "Invalid email",
+    "passwordMin": "Password must have at least 6 characters",
+    "passwordsDontMatch": "Passwords do not match"
+  },
+  "errors": {
+    "notAuthenticated": "User not authenticated"
+  }
+}

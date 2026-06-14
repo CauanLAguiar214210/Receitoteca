@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '../lib/supabaseClient'
 import type { Recipe } from '../types/recipe'
 import type { RecipeFormData } from '../lib/validators'
+import i18n from '../lib/i18n'
 
 async function getRecipes(): Promise<Recipe[]> {
   const { data, error } = await supabase
@@ -26,7 +27,7 @@ async function getRecipe(id: string): Promise<Recipe> {
 
 async function createRecipe(form: RecipeFormData) {
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) throw new Error('Usuário não autenticado')
+  if (!user) throw new Error(i18n.t('errors.notAuthenticated'))
 
   const { data, error } = await supabase
     .from('recipes')

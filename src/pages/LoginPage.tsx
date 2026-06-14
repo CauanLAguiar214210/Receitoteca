@@ -2,8 +2,10 @@ import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { Mail, Lock, LogIn } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 export default function LoginPage() {
+  const { t } = useTranslation()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
@@ -19,7 +21,7 @@ export default function LoginPage() {
       await login(email, password)
       navigate('/')
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erro ao fazer login')
+      setError(err instanceof Error ? err.message : t('auth.login.fallbackError'))
     } finally {
       setLoading(false)
     }
@@ -28,8 +30,8 @@ export default function LoginPage() {
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
       <div className="text-center">
-        <h2 className="text-xl font-bold text-stone-800">Entrar</h2>
-        <p className="text-sm text-stone-500 mt-1">Acesse suas receitas</p>
+        <h2 className="text-xl font-bold text-stone-800">{t('auth.login.title')}</h2>
+        <p className="text-sm text-stone-500 mt-1">{t('auth.login.subtitle')}</p>
       </div>
 
       {error && (
@@ -37,7 +39,7 @@ export default function LoginPage() {
       )}
 
       <div>
-        <label className="block text-sm font-medium text-stone-700 mb-1.5">Email</label>
+        <label className="block text-sm font-medium text-stone-700 mb-1.5">{t('auth.login.emailLabel')}</label>
         <div className="relative">
           <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400" />
           <input
@@ -51,7 +53,7 @@ export default function LoginPage() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-stone-700 mb-1.5">Senha</label>
+        <label className="block text-sm font-medium text-stone-700 mb-1.5">{t('auth.login.passwordLabel')}</label>
         <div className="relative">
           <Lock size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400" />
           <input
@@ -74,12 +76,12 @@ export default function LoginPage() {
         ) : (
           <LogIn size={18} />
         )}
-        {loading ? 'Entrando...' : 'Entrar'}
+        {loading ? t('auth.login.buttonLoading') : t('auth.login.button')}
       </button>
 
       <p className="text-sm text-center text-stone-500">
-        Não tem conta?{' '}
-        <Link to="/register" className="text-primary hover:text-primary-dark font-medium">Cadastre-se</Link>
+        {t('auth.login.noAccount')}{' '}
+        <Link to="/register" className="text-primary hover:text-primary-dark font-medium">{t('auth.login.signUpLink')}</Link>
       </p>
     </form>
   )

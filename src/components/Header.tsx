@@ -1,8 +1,11 @@
 import { Link, useNavigate, useSearchParams, useLocation } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { LogOut, Heart, Plus, Search, ShoppingCart, ChefHat } from 'lucide-react'
+import LanguageSwitcher from './LanguageSwitcher'
+import { useTranslation } from 'react-i18next'
 
 export default function Header() {
+  const { t } = useTranslation()
   const { user, logout } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
@@ -14,9 +17,9 @@ export default function Header() {
   }
 
   const navLinks = [
-    { to: '/', label: 'Início', exact: true },
-    { to: '/favorites', label: 'Favoritos', icon: Heart },
-    { to: '/shopping-list', label: 'Compras', icon: ShoppingCart },
+    { to: '/', label: t('nav.home'), exact: true },
+    { to: '/favorites', label: t('nav.favorites'), icon: Heart },
+    { to: '/shopping-list', label: t('nav.shopping'), icon: ShoppingCart },
   ]
 
   const isActive = (path: string, exact?: boolean) =>
@@ -36,7 +39,7 @@ export default function Header() {
           <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400" />
           <input
             type="text"
-            placeholder="Buscar receitas..."
+            placeholder={t('nav.searchPlaceholder')}
             value={searchParams.get('q') ?? ''}
             onChange={(e) => {
               const params = new URLSearchParams(searchParams)
@@ -73,17 +76,18 @@ export default function Header() {
           className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-white bg-primary rounded-lg hover:bg-primary-dark transition-colors shrink-0"
         >
           <Plus size={18} />
-          <span className="hidden sm:inline">Nova Receita</span>
+          <span className="hidden sm:inline">{t('nav.newRecipe')}</span>
         </Link>
 
         <div className="flex items-center gap-3 pl-4 border-l border-border">
+          <LanguageSwitcher />
           <span className="text-sm text-stone-500 max-w-24 truncate hidden sm:block">{user?.email}</span>
           <button
             onClick={handleLogout}
             className="flex items-center gap-1 text-sm text-stone-500 hover:text-danger transition-colors cursor-pointer shrink-0"
           >
             <LogOut size={16} />
-            <span className="hidden sm:inline">Sair</span>
+            <span className="hidden sm:inline">{t('nav.signOut')}</span>
           </button>
         </div>
       </div>

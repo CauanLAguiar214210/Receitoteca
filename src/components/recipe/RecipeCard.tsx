@@ -1,12 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Clock, Users, ChefHat } from 'lucide-react'
 import type { Recipe } from '../../types/recipe'
-
-const difficultyLabel: Record<string, string> = {
-  easy: 'Fácil',
-  medium: 'Médio',
-  hard: 'Difícil',
-}
+import { useTranslation } from 'react-i18next'
 
 const difficultyColor: Record<string, string> = {
   easy: 'bg-emerald-100 text-emerald-700',
@@ -19,6 +14,8 @@ interface RecipeCardProps {
 }
 
 export default function RecipeCard({ recipe }: RecipeCardProps) {
+  const { t } = useTranslation()
+
   return (
     <Link
       to={`/recipes/${recipe.id}`}
@@ -32,7 +29,7 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
         )}
         {recipe.difficulty && (
           <span className={`absolute top-2 right-2 px-2 py-0.5 rounded-full text-[11px] font-medium ${difficultyColor[recipe.difficulty]}`}>
-            {difficultyLabel[recipe.difficulty]}
+            {t(`home.${recipe.difficulty}`)}
           </span>
         )}
       </div>
@@ -46,12 +43,12 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
           )}
           {recipe.servings && (
             <span className="flex items-center gap-1">
-              <Users size={14} /> {recipe.servings} porções
+              <Users size={14} /> {t('recipe.detail.servings', { count: recipe.servings })}
             </span>
           )}
           {recipe.difficulty && (
             <span className="flex items-center gap-1">
-              <ChefHat size={14} /> {difficultyLabel[recipe.difficulty]}
+              <ChefHat size={14} /> {t(`home.${recipe.difficulty}`)}
             </span>
           )}
         </div>

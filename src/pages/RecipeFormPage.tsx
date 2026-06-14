@@ -12,8 +12,10 @@ import Select from '../components/ui/Select'
 import ImageUpload from '../components/ui/ImageUpload'
 import LoadingSpinner from '../components/ui/LoadingSpinner'
 import { useToastStore } from '../stores/useToastStore'
+import { useTranslation } from 'react-i18next'
 
 export default function RecipeFormPage() {
+  const { t } = useTranslation()
   const { id } = useParams<{ id: string }>()
   const isEditing = !!id
   const navigate = useNavigate()
@@ -78,18 +80,18 @@ export default function RecipeFormPage() {
     if (isEditing) {
       update(data, {
         onSuccess: () => {
-          addToast('Receita atualizada com sucesso')
+          addToast(t('recipe.form.updatedSuccess'))
           navigate(`/recipes/${id}`)
         },
-        onError: () => addToast('Erro ao atualizar receita', 'error'),
+        onError: () => addToast(t('recipe.form.updateError'), 'error'),
       })
     } else {
       create(data, {
         onSuccess: (newRecipe) => {
-          addToast('Receita criada com sucesso')
+          addToast(t('recipe.form.createdSuccess'))
           navigate(`/recipes/${newRecipe.id}`)
         },
-        onError: () => addToast('Erro ao criar receita', 'error'),
+        onError: () => addToast(t('recipe.form.createError'), 'error'),
       })
     }
   }
@@ -101,17 +103,23 @@ export default function RecipeFormPage() {
     label: `${c.icon ?? ''} ${c.name}`,
   }))
 
+  const difficultyOptions = [
+    { value: 'easy', label: t('home.easy') },
+    { value: 'medium', label: t('home.medium') },
+    { value: 'hard', label: t('home.hard') },
+  ]
+
   return (
     <div className="max-w-2xl mx-auto">
       <button
         onClick={() => navigate(-1)}
         className="flex items-center gap-1 text-sm text-stone-500 hover:text-stone-700 mb-4 cursor-pointer"
       >
-        <ArrowLeft size={16} /> Voltar
+        <ArrowLeft size={16} /> {t('recipe.form.back')}
       </button>
 
       <h1 className="text-2xl font-bold text-stone-800 mb-6">
-        {isEditing ? 'Editar Receita' : 'Nova Receita'}
+        {isEditing ? t('recipe.form.editTitle') : t('recipe.form.newTitle')}
       </h1>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -121,38 +129,34 @@ export default function RecipeFormPage() {
         />
 
         <Input
-          label="Título"
+          label={t('recipe.form.titleLabel')}
           error={errors.title?.message}
           {...register('title')}
         />
 
         <Textarea
-          label="Descrição"
+          label={t('recipe.form.descriptionLabel')}
           rows={3}
           error={errors.description?.message}
           {...register('description')}
         />
 
         <div className="grid grid-cols-2 gap-4">
-          <Input label="Tempo de preparo (min)" type="number" {...register('prep_time', { valueAsNumber: true })} />
-          <Input label="Tempo de cozimento (min)" type="number" {...register('cook_time', { valueAsNumber: true })} />
-          <Input label="Porções" type="number" {...register('servings', { valueAsNumber: true })} />
+          <Input label={t('recipe.form.prepTimeLabel')} type="number" {...register('prep_time', { valueAsNumber: true })} />
+          <Input label={t('recipe.form.cookTimeLabel')} type="number" {...register('cook_time', { valueAsNumber: true })} />
+          <Input label={t('recipe.form.servingsLabel')} type="number" {...register('servings', { valueAsNumber: true })} />
 
           <Select
-            label="Dificuldade"
-            placeholder="Selecione"
-            options={[
-              { value: 'easy', label: 'Fácil' },
-              { value: 'medium', label: 'Médio' },
-              { value: 'hard', label: 'Difícil' },
-            ]}
+            label={t('recipe.form.difficultyLabel')}
+            placeholder={t('recipe.form.selectPlaceholder')}
+            options={difficultyOptions}
             {...register('difficulty')}
           />
 
           <div className="col-span-2">
             <Select
-              label="Categoria"
-              placeholder="Selecione"
+              label={t('recipe.form.categoryLabel')}
+              placeholder={t('recipe.form.selectPlaceholder')}
               options={categoryOptions}
               {...register('category_id')}
             />
@@ -161,13 +165,13 @@ export default function RecipeFormPage() {
 
         <section>
           <div className="flex items-center justify-between mb-2">
-            <label className="text-sm font-medium text-stone-700">Ingredientes</label>
+            <label className="text-sm font-medium text-stone-700">{t('recipe.form.ingredientsSection')}</label>
             <button
               type="button"
               onClick={() => appendIng({ name: '', amount: 0, unit: '' })}
               className="flex items-center gap-1 text-sm text-primary hover:text-primary-dark cursor-pointer"
             >
-              <Plus size={16} /> Adicionar
+              <Plus size={16} /> {t('recipe.form.addIngredient')}
             </button>
           </div>
           {errors.ingredients && (
@@ -178,7 +182,7 @@ export default function RecipeFormPage() {
               <div key={field.id} className="flex gap-2 items-start">
                 <Input
                   label=""
-                  placeholder="Nome"
+                  placeholder={t('recipe.form.namePlaceholder')}
                   className="flex-1"
                   {...register(`ingredients.${i}.name`)}
                 />
@@ -186,13 +190,13 @@ export default function RecipeFormPage() {
                   label=""
                   type="number"
                   step="any"
-                  placeholder="Qtd"
+                  placeholder={t('recipe.form.qtyPlaceholder')}
                   className="w-20"
                   {...register(`ingredients.${i}.amount`, { valueAsNumber: true })}
                 />
                 <Input
                   label=""
-                  placeholder="Un"
+                  placeholder={t('recipe.form.unitPlaceholder')}
                   className="w-20"
                   {...register(`ingredients.${i}.unit`)}
                 />
@@ -212,14 +216,14 @@ export default function RecipeFormPage() {
 
         <section>
           <div className="flex items-center justify-between mb-2">
-            <label className="text-sm font-medium text-stone-700">Modo de Preparo</label>
+            <label className="text-sm font-medium text-stone-700">{t('recipe.form.instructionsSection')}</label>
             <Button
               type="button"
               variant="ghost"
               onClick={() => appendInst('')}
               className="text-primary text-sm"
             >
-              <Plus size={16} /> Adicionar passo
+              <Plus size={16} /> {t('recipe.form.addStep')}
             </Button>
           </div>
           {errors.instructions && (
@@ -232,7 +236,7 @@ export default function RecipeFormPage() {
                 <Textarea
                   label=""
                   rows={2}
-                  placeholder={`Passo ${i + 1}`}
+                  placeholder={t('recipe.form.stepPlaceholder', { number: i + 1 })}
                   className="flex-1"
                   {...register(`instructions.${i}`)}
                 />
@@ -252,10 +256,10 @@ export default function RecipeFormPage() {
 
         <div className="flex justify-end gap-3 pt-4 border-t border-stone-200">
           <Button type="button" variant="secondary" onClick={() => navigate(-1)}>
-            Cancelar
+            {t('recipe.form.cancel')}
           </Button>
           <Button type="submit" disabled={creating || updating}>
-            {creating || updating ? 'Salvando...' : isEditing ? 'Atualizar' : 'Criar Receita'}
+            {creating || updating ? t('common.saving') : isEditing ? t('recipe.form.submitUpdate') : t('recipe.form.submitCreate')}
           </Button>
         </div>
       </form>

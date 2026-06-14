@@ -5,7 +5,7 @@ interface EmptyStateProps {
   action?: { label: string; onClick: () => void }
 }
 
-export default function EmptyState({ message = 'Nenhum item encontrado', action }: EmptyStateProps) {
+export default function EmptyState({ message, action }: EmptyStateProps) {
   return (
     <div className="flex flex-col items-center justify-center py-16 text-stone-400 animate-fade-in">
       <div className="size-20 rounded-full bg-primary-light flex items-center justify-center mb-4">

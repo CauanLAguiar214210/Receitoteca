@@ -1,8 +1,10 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import { useRecipe } from '../hooks/useRecipes'
 import LoadingSpinner from '../components/ui/LoadingSpinner'
+import { useTranslation } from 'react-i18next'
 
 export default function CookingModePage() {
+  const { t } = useTranslation()
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const { data: recipe, isLoading } = useRecipe(id!)
@@ -12,7 +14,7 @@ export default function CookingModePage() {
   if (!recipe) {
     return (
       <div className="min-h-screen flex items-center justify-center text-stone-500">
-        Receita não encontrada
+        {t('cooking.notFound')}
       </div>
     )
   }
@@ -27,7 +29,7 @@ export default function CookingModePage() {
           onClick={() => navigate(-1)}
           className="px-4 py-1.5 text-sm bg-stone-700 hover:bg-stone-600 rounded-lg transition-colors cursor-pointer"
         >
-          Sair
+          {t('cooking.exit')}
         </button>
       </div>
 
@@ -45,7 +47,7 @@ export default function CookingModePage() {
       </div>
 
       <div className="px-6 py-4 border-t border-stone-700 text-center text-sm text-stone-500">
-        {steps.length} passo{steps.length !== 1 ? 's' : ''}
+        {t('cooking.steps', { count: steps.length })}
       </div>
     </div>
   )

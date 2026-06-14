@@ -5,16 +5,11 @@ import { useDebounce } from '../hooks/useDebounce'
 import RecipeCard from '../components/recipe/RecipeCard'
 import RecipeCardSkeleton from '../components/ui/RecipeCardSkeleton'
 import EmptyState from '../components/ui/EmptyState'
+import { useTranslation } from 'react-i18next'
 import type { Difficulty } from '../types/recipe'
 
-const difficulties: { value: Difficulty | ''; label: string }[] = [
-  { value: '', label: 'Todas' },
-  { value: 'easy', label: 'Fácil' },
-  { value: 'medium', label: 'Médio' },
-  { value: 'hard', label: 'Difícil' },
-]
-
 function HomePage() {
+  const { t } = useTranslation()
   const [searchParams, setSearchParams] = useSearchParams()
   const navigate = useNavigate()
   const { data: recipes, isLoading } = useRecipes()
@@ -23,6 +18,13 @@ function HomePage() {
   const searchQuery = useDebounce(searchParams.get('q') ?? '', 300)
   const selectedCategory = searchParams.get('category') ?? ''
   const selectedDifficulty = searchParams.get('difficulty') ?? ''
+
+  const difficulties: { value: Difficulty | ''; label: string }[] = [
+    { value: '', label: t('home.allDifficulties') },
+    { value: 'easy', label: t('home.easy') },
+    { value: 'medium', label: t('home.medium') },
+    { value: 'hard', label: t('home.hard') },
+  ]
 
   const filtered = useMemo(() => {
     if (!recipes) return []
@@ -69,7 +71,7 @@ function HomePage() {
           onChange={(e) => setParam('category', e.target.value)}
           className="px-3 py-1.5 text-sm border border-border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"
         >
-          <option value="">Todas categorias</option>
+          <option value="">{t('home.allCategories')}</option>
           {categories?.map((c) => (
             <option key={c.id} value={c.id}>{c.icon} {c.name}</option>
           ))}
@@ -93,7 +95,7 @@ function HomePage() {
 
         {searchQuery && (
           <span className="text-sm text-stone-500 ml-auto">
-            {filtered.length} receita{filtered.length !== 1 ? 's' : ''} encontrada{filtered.length !== 1 ? 's' : ''}
+            {t('home.recipesFound', { count: filtered.length })}
           </span>
         )}
 
@@ -101,14 +103,14 @@ function HomePage() {
           onClick={() => navigate('/recipes/new')}
           className="ml-auto px-4 py-1.5 bg-primary text-white rounded-lg text-sm font-medium hover:bg-primary-dark transition-colors cursor-pointer md:hidden"
         >
-          Nova Receita
+          {t('home.newRecipe')}
         </button>
       </div>
 
       {filtered.length === 0 ? (
         <EmptyState
-          message={searchQuery ? 'Nenhuma receita encontrada para esta busca' : 'Nenhuma receita cadastrada ainda'}
-          action={!searchQuery ? { label: 'Criar primeira receita', onClick: () => navigate('/recipes/new') } : undefined}
+          message={searchQuery ? t('home.noResults') : t('home.noRecipes')}
+          action={!searchQuery ? { label: t('home.createFirst'), onClick: () => navigate('/recipes/new') } : undefined}
         />
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
